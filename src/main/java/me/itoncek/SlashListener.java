@@ -53,9 +53,10 @@ public class SlashListener extends ListenerAdapter {
 						.queue();
 				
 				try {
-					Runtime.getRuntime().exec("wsl -d Ubuntu-22.04 -e chmod +x /mnt/d/#astro/astrometry");
+					Runtime.getRuntime().exec("wsl -d Ubuntu-22.04 -e chmod +x /mnt/d/#astro/astrometry/dbot/"+attachment.getFileName() + ".sh");
+					Runtime.getRuntime().exec("wsl -d Ubuntu-22.04 -e ./"+attachment.getFileName() + ".sh");
 				} catch (IOException e) {
-					ec = ec + "\n\nAfterlife isn't responding. \nPlease message <@580098459802271744> with following info: \n`359 DISK-ERROR`";
+					ec = ec + "\n\nAfterlife isn't responding. \nPlease message <@580098459802271744> with following info: \n`42 EXEC-ERROR`";
 					event.getHook().editOriginalEmbeds(buildEmbed("💥SOLVING ERROR💥", ec, Color.RED)).queue();
 					return;
 				}
