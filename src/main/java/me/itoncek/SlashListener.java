@@ -52,7 +52,13 @@ public class SlashListener extends ListenerAdapter {
 						.editOriginalEmbeds(buildEmbed("🔭Astrometry request🔭", ec, Color.GREEN))
 						.queue();
 				
-				Runtime.getRuntime().exec("wsl -d Ubuntu-22.04 -e chmod +x /mnt/d/#astro/astrometry");
+				try {
+					Runtime.getRuntime().exec("wsl -d Ubuntu-22.04 -e chmod +x /mnt/d/#astro/astrometry");
+				} catch (IOException e) {
+					ec = ec + "\n\nAfterlife isn't responding. \nPlease message <@580098459802271744> with following info: \n`359 DISK-ERROR`";
+					event.getHook().editOriginalEmbeds(buildEmbed("💥SOLVING ERROR💥", ec, Color.RED)).queue();
+					return;
+				}
 			} else {
 				event.getHook().sendMessage("Sorry, I cannot process filetype `" + attachment.getFileExtension() + "`").setEphemeral(true).queue();
 			}
